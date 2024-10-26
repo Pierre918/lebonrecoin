@@ -1,9 +1,9 @@
 'use server'
-import React from 'react';
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
+import { User } from '@supabase/supabase-js'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -67,14 +67,14 @@ export const editUser = async (formData: FormData) => {
   console.log(formData)
   const { error } = await supabase
     .from('users')
-    .update({ name: formData.get('name') as string, adress: formData.get('adresse') as string })
+    .update({ name: formData.get('nom') as string, adress: formData.get('adresse') as string })
     .eq('user_id', (await supabase.auth.getUser())["data"]["user"]!["id"])
   if (error) {
     console.log(error)
     redirect('/error')
   }
   console.log('ok')
-  const { data, error: auth_error } = await supabase.auth.updateUser({
+  const { error: auth_error } = await supabase.auth.updateUser({
     email: formData.get("email") as string
   })
   if (auth_error) {
@@ -138,7 +138,7 @@ export const editItem= async(formData:FormData)=>{
   }
   console.log('ojojo')
 }
-export const getUserItems = async (user: any) => {
+export const getUserItems = async (user: User) => {
   if (user) {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -243,7 +243,6 @@ export const getAllItems = async ()=>{
 }
 
 export const getItem= async(id:number)=>{
- console.log(id)
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('items')
@@ -261,25 +260,25 @@ export const getItem= async(id:number)=>{
     console.log(error)
     redirect("/error")
   }
-  console.log('AOHA')
-  console.log(data)
   return data
 }
 
 export const getLocalisations = async ()=>{
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from('users')
-    .select("adress")
+    .from('items')
+    .select("users(adress)")
+    .eq("is_sold",false)
   if (error){
     console.log(error)
     redirect("/error")
   }
-  const code = data.map(elt => {
-     return elt["adress"].split(" ")[(elt["adress"].split(" ").length)-1]
+  if (data)
+{    const code = data.map(elt => {
+      return elt.users.adress.split(" ")[(elt.users["adress"].split(" ").length)-1]
 
-  })
-  return code
+    })
+    return code}
 }
 
 export const handleFormAddItem = async(formData:FormData)=>{
@@ -314,13 +313,10 @@ export const delOneItem = async(formData:FormData)=>{
 export const delItem = async(items:any[],price:number,is_ordering:boolean)=>{
   const supabase = await createClient();
   for (let i=0;i<items.length;i++){
-    console.log(items[i][0]["id"])
-    console.log(items[i][0]["item_images"][0]["id"])
     let response = await supabase
     .from('item_images')
     .delete()
     .eq('id', items[i][0]["item_images"][0]["id"])
-    console.log(response)
 
     response = await supabase
     .from('items')

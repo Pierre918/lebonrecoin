@@ -1,14 +1,14 @@
 "use client"
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import MyButton from './MyButton';
-import { getAllItems, updateFilter } from '@/app/actions';
+import { updateFilter } from '@/app/actions';
 
 
 
 interface param{
     title:string,
     show_filter:boolean,
-    localisations?:any[],
+    localisations?:string[],
     allItems?:any[],
     onUpdate?:Dispatch<SetStateAction<any[]>>
 }

@@ -1,5 +1,4 @@
 
-import SubHeader from "./components/ui/SubHeader";
 import { getAllItems, getLocalisations } from "./actions";
 import ListItem from "./components/ui/ListItem";
 

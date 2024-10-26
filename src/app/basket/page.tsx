@@ -9,15 +9,15 @@ import MyButton from '../components/ui/MyButton';
 const page = async () => {
     
     let ids: string[] = []; 
-    let item:any[]=[];
+    const item:any[]=[];
     const cookieStore = await cookies()
     let price=0;
     if (cookieStore.has('cart')) {
         ids = cookieStore.get('cart')!.value.split(" ")
-        for (let i=0;i<ids.length;i++){4
+        for (let i=0;i<ids.length;i++){
             item.push(await getItem(Number(ids[i])))
         }
-        for (let i=0;i<item.length;i++){4
+        for (let i=0;i<item.length;i++){
             price+=item[i][0]["price"]
         }
     }

@@ -2,7 +2,7 @@
 import React from 'react'
 
 interface params {
-    formAction: ((formData: FormData) => void | Promise<void>),
+    formAction: ((formData: FormData) => void | Promise<void>)
 
 }
 const DeleteButton: React.FC<params> = ({ formAction }) => {

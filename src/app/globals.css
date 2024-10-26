@@ -5,7 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --custom-color: #AA91E4; /* Définir une variable de couleur */
+  --custom-color: rgb(170, 145, 228); /* Définir une variable de couleur */
 }
 
 .violet{
@@ -17,6 +17,9 @@
 
 .my-bg{
   background:var(--custom-color);
+}
+.my-bg-opacity{
+  background:rgba(170, 145, 228,0.5)
 }
 
 .text-custom{

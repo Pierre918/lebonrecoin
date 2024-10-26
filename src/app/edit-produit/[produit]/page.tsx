@@ -1,5 +1,5 @@
 "use client"
-import { addItem, editItem, getItem } from '@/app/actions'
+import { editItem, getItem } from '@/app/actions'
 import MyButton from '@/app/components/ui/MyButton'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ interface Params{
     });
   };
 
-const page = ({params}:Params) => {
+const Page = ({params}:Params) => {
     const [imageItem , setImageItem] = useState<string>('')
     const setUp= async ({params}:Params)=>{
         const {produit}=await params
@@ -40,11 +40,11 @@ const page = ({params}:Params) => {
   return (
     <>
 <div className="flex w-full flex-col mt-4 space-y-5 ">
-                <h3 className='text-2xl'>Edit item's info</h3>
+                <h3 className='text-2xl'>Edit item&apos;s info</h3>
                 {item?<form className={`flex flex-row w-full space-x-5`} name="additem">
                     <input type="text" name="item_id" id="item_id" defaultValue={item[0]["id"]} className='hidden'/>
                     <div className="flex flex-col space-y-2 ">
-                        <label htmlFor="name">Item's name</label>
+                        <label htmlFor="name">Item&apos;s name</label>
                         <input id="name" name="name" type="text" className='w-72 h-12 p-3 rounded border border-black bg-gray-100' placeholder="Mon nouveau bob" defaultValue={item[0]["title"]} required />
                         <label htmlFor="price">Price</label>
                         <input id="price" name="price" className='w-72 h-12 p-3 rounded border border-black bg-gray-100' placeholder='40k mgl' defaultValue={item[0]["price"]} type="number" required />
@@ -84,11 +84,10 @@ const page = ({params}:Params) => {
               </div>
               }
                 
-<img></img>
             </div>
     
     </>
   )
 }
 
-export default page
+export default Page

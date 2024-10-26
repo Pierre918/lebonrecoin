@@ -1,8 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import MyButton from './MyButton'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
 import { addItem } from '@/app/actions'
 
 // Convert a file to base64 string
@@ -31,7 +29,7 @@ const ItemForm = () => {
                 <h3 className='text-2xl'>Edit your info</h3>
                 <form className='flex flex-row w-full space-x-5' name="additem">
                     <div className="flex flex-col space-y-2 ">
-                        <label htmlFor="name">Item's name</label>
+                        <label htmlFor="name">Item&apos;s name</label>
                         <input id="name" name="name" type="text" className='w-72 h-12 p-3 rounded border border-black bg-gray-100' placeholder="Mon nouveau bob" required />
                         <label htmlFor="price">Price</label>
                         <input id="price" name="price" className='w-72 h-12 p-3 rounded border border-black bg-gray-100' placeholder='40k mgl' type="number" required />

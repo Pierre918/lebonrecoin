@@ -14,7 +14,25 @@ interface Params{
 const page = async ({params}:Params) => {
   
     const {produit}=await params
-    const item:any[] =(await getItem(Number(produit)))
+    const item:any/*{
+      id: any;
+      user_id: any;
+      title: any;
+      description: any;
+      price: any;
+      created_at: any;
+      is_sold: any;
+      item_images: {
+          id: any;
+          item_id: any;
+          image_url: any;
+      }[];
+      users: {
+          user_id: any;
+          adress: any;
+          name: any;
+      };
+  }[]*/ =(await getItem(Number(produit)))
   return (
     <>
         <SubHeader show_filter={false} title={item[0]["title"]}></SubHeader>
@@ -36,8 +54,8 @@ const page = async ({params}:Params) => {
           </div>
           <div className="flex flex-col">
             <h2 className='text-lg font-bold'>Vendeur :</h2>
-            <p><b>{item[0]["users"]["name"]}</b></p>
-            <p>{item[0]["users"]["adress"]}</p>
+            <p><b>{item[0].users.name}</b></p>
+            <p>{item[0].users.adress}</p>
           </div>
         </div>
     </>

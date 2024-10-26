@@ -9,16 +9,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import 'material-icons/iconfont/material-icons.css';
 import DeleteButton from '../components/ui/DeleteButton'
+import { User } from '@supabase/supabase-js'
 const page = async () => {
     let name_user;
-    let user;
+    let user:User;
     let user_address;
     const supabase = await createClient();
     try {
 
         user = (await supabase.auth.getUser())["data"]["user"]!
 
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('users')
             .select("name,adress")
             .eq("user_id", user["id"])
@@ -28,6 +29,7 @@ const page = async () => {
         name_user = data[0]["name"]
         user_address = data[0]["adress"]
     } catch (error) {
+        console.log(error)
         redirect("/error")
     }
 
@@ -36,9 +38,9 @@ const page = async () => {
     try {
         userItems = await getUserItems(user)
     } catch (error) {
-
+        console.log(error)
+        redirect("/error")
     }
-
     return (
         <>
             <SubHeader title={`Hello ${name_user}`} show_filter={false}></SubHeader>
@@ -64,9 +66,9 @@ const page = async () => {
                     
                         <ul className='flex flex-col space-y-5'>
                             {
-                                userItems.map((userItem: any, index: number) => (
-                                    
-                                        <li className="flex flex-row justify-between" key={index}>
+                                userItems.map((userItem: any, index: number) => {
+                                   
+                                      return  <li className="flex flex-row justify-between" key={index}>
                                            <div className="flex flex-row space-x-3 ">
                                             <Image
                                                 src={userItem["image_url"]}
@@ -81,7 +83,7 @@ const page = async () => {
                                                 <p className='text-gray-500'>{userItem["description"]}</p>
                                             </div>
                                             </div>
-                                            <div className="flex flex-col justify-center space-y-3">
+                                            <div className={`flex flex-col justify-center space-y-3 `+userItem?"":"hidden"}>
                                             <Link href={`/edit-produit/${userItem["id"]}`}>
                                             <i className='material-icons opacity-50'>edit</i>
                                             </Link>
@@ -92,7 +94,7 @@ const page = async () => {
                                             </div>
                                         </li>
                                     
-                                ))}
+})}
                         </ul>
                     
                     <Link href="/add-item">

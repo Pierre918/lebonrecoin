@@ -12,9 +12,9 @@ interface MyButtonProps{
     price?:number
 }
 
-const MyButton: React.FC<MyButtonProps> = ({ text,formAction, className,onClick,item,price }) => {
+const MyButton: React.FC<MyButtonProps> = ({ text,formAction, className,item,price }) => {
   return (
-   <button onClick={()=>{ (item && price)?delItem(item,price,true):console.log()}} className={`rounded-md px-3 py-1 border my-bg ${className}`} formAction={formAction ? formAction : undefined}  >
+   <button onClick={()=>{ if (item && price) { delItem(item,price,true); } }} className={`rounded-md px-3 py-1 border my-bg ${className}`} formAction={formAction ? formAction : undefined}  >
         <p className="blanc">{text}</p>
     </button>
     

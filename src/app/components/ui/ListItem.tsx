@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 interface param {
-  localisations?: any[],
+  localisations?: string[],
   itemList: any[]
 }
 const ListItem: React.FC<param> = ({ localisations, itemList }) => {
@@ -17,7 +17,7 @@ const ListItem: React.FC<param> = ({ localisations, itemList }) => {
       <div className='grid grid-cols-4 justify-around gap-x-10'>
         {
           itemListUp.map(
-            (item, index) => {
+            (item) => {
               return <Link href={`/produit/${item.id}`} key={item.id} >
                 <div className='rounded-lg space-y-1 pb-1  border-gray-400 bg-gray-100 flex flex-col'>
                   <Image
